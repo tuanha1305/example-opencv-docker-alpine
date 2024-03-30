@@ -1,0 +1,8 @@
+numpy~=1.26.4
+filetype~=1.2.0
+toml~=0.10.2
+flask~=3.0.2
+werkzeug~=3.0.1
+PyJWT~=2.6.0
+pillow
+Flask-Cors
