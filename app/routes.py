@@ -2,6 +2,7 @@ import os
 
 import cv2
 from flask import Blueprint, jsonify, request, current_app
+from app.entity.map import MapSchema
 
 from app.upload import file_upload
 
@@ -49,6 +50,24 @@ def get_size(save_path):
             'channels': channels
         }
         return jsonify({'success': True, 'data': result, 'message': 'Successfully uploaded.'}), 200
+
+    except Exception as e:
+        message = f'An error occurred: {str(e)}' if current_app.debug else 'An internal error occurred. Please try again later.'
+        return jsonify({'success': False, 'message': message}), 500
+
+
+@api_blueprint.route('/api/v1/map-preview', methods=['POST'])
+@error_handler
+def map_preview():
+    try:
+        payload = request.get_json()
+        map_info = MapSchema()
+        errors = map_info.validate(payload)
+
+        if errors:
+            return jsonify({'success': False, 'message': 'Validation error', 'errors': errors}), 400
+
+        return jsonify({'success': True, 'data': payload, 'message': 'Successfully.'}), 200
 
     except Exception as e:
         message = f'An error occurred: {str(e)}' if current_app.debug else 'An internal error occurred. Please try again later.'
