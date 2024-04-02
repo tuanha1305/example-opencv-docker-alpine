@@ -8,3 +8,5 @@ werkzeug~=3.0.1
 PyJWT~=2.6.0
 pillow
 Flask-Cors
+requests
+marshmallow
